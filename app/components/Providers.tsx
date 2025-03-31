@@ -2,6 +2,7 @@
 import React from "react";
 import { ImageKitProvider, IKImage } from "imagekitio-next";
 import { SessionProvider } from "next-auth/react";
+import { NotificationProvider } from "./Notification";
 
 
 const urlEndpoint = process.env.NEXT_PUBLIC_URL_ENDPOINT;
@@ -30,8 +31,10 @@ export default function Providers({children}:{children:React.ReactNode}) {
   return (
         <SessionProvider>
       <ImageKitProvider urlEndpoint={urlEndpoint} publicKey={publicKey} authenticator={authenticator}>
-        {/* ...client side upload component goes here */}
-        {children}
+        <NotificationProvider>
+          {/* ...client side upload component goes here */}
+          {children}
+        </NotificationProvider>
       </ImageKitProvider>
       </SessionProvider>
 

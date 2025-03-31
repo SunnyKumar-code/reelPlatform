@@ -26,7 +26,7 @@ title:{type:String,required:true},
 description:{type:String,required:true},
 videoUrl:{type:String,required:true},
 thumbnailUrl:{type:String,required:true},
-controls:{types:Boolean,default:true},
+controls:{type:Boolean,default:true},
 transformation:{
     height:{type:Number,default:VIDEO_DIMENSIONS.height},
     width:{type:Number,default:VIDEO_DIMENSIONS.width},
@@ -34,7 +34,8 @@ transformation:{
 }
 },{timestamps:true})
 
-const Video = models?.Video || model<IVideo>("videos",videoSchema)
+// Check if the model exists before creating a new one
+const Video = mongoose.models.Video || mongoose.model<IVideo>("Video", videoSchema);
 
 export default Video;
 

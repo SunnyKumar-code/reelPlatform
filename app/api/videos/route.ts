@@ -1,7 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { connectToDatabase } from "@/lib/db";
 import Video, { IVideo } from "@/models/Video";
-import { error } from "console";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -20,7 +19,7 @@ export async function GET() {
         )
     }
 }
-export async function POST(request:NextResponse){
+export async function POST(request:Request){
     try {
       const session =   await getServerSession(authOptions)
       if(!session){

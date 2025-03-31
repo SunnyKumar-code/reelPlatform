@@ -24,6 +24,7 @@ userSchema.pre("save",async function (next){
     next()
 })
 
-const User = models?.User || model<IUser>("users",userSchema)
+// Check if the model exists before creating a new one
+const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema)
 
 export default User;

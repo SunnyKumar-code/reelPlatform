@@ -29,5 +29,15 @@ export default withAuth(
 )
 
 export const config = {
-    matcher:["/((?!_next/static|_next/image|favicon.ico|public/).*"],
+    matcher: [
+        /*
+         * Match all request paths except for the ones starting with:
+         * - api/auth (NextAuth.js paths)
+         * - _next/static (static files)
+         * - _next/image (image optimization files)
+         * - favicon.ico (favicon file)
+         * - public (public files)
+         */
+        '/((?!api/auth|_next/static|_next/image|_next/data|favicon.ico|public/).*)'
+    ],
 }

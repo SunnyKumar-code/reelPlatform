@@ -31,6 +31,11 @@ export default function FileUpload({
         setUploading(false)
         setError(null)
         onSuccess(response)
+        
+        // Also set progress to 100 to ensure button is enabled
+        if (onProgress) {
+            onProgress(100);
+        }
     };
 
     const handleProgress = (evt: ProgressEvent) => {
@@ -38,12 +43,16 @@ export default function FileUpload({
             const percentComplete = (evt.loaded / evt.total) * 100
             onProgress(Math.round(percentComplete))
         }
-
     };
 
     const handleStartUpload = () => {
         setUploading(true)
         setError(null)
+        
+        // Set initial progress to show activity
+        if (onProgress) {
+            onProgress(1);
+        }
     };
 
 
@@ -64,12 +73,11 @@ export default function FileUpload({
                 return false
             }
             if (file.size > 4 * 1024 * 1024) {
-                setError("Video must be less than 4MB")
+                setError("Image must be less than 4MB")
                 return false
             }
         }
-        return false
-
+        return true // Fixed: Return true if validation passes
     }
 
 
