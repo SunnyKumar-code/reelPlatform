@@ -1,13 +1,14 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IKUploadResponse } from "imagekitio-next/dist/types/components/IKUpload/props";
-import { Loader2, Upload, X, Image as ImageIcon } from "lucide-react";
+import { Upload, X, Image as ImageIcon } from "lucide-react";
 import { useNotification } from "./Notification";
 import { apiClient } from "@/lib/api-client";
 import FileUpload from "./FileUpload";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 interface VideoFormData {
   title: string;
@@ -19,10 +20,8 @@ interface VideoFormData {
 export default function VideoUploadForm() {
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [videoSelected, setVideoSelected] = useState(false);
   const [videoPreviewUrl, setVideoPreviewUrl] = useState<string | null>(null);
   const [step, setStep] = useState<'upload' | 'details'>('upload');
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const { showNotification } = useNotification();
   const router = useRouter();
 
@@ -42,13 +41,12 @@ export default function VideoUploadForm() {
   });
 
   const title = watch("title");
-  const description = watch("description");
+  // We use title in the character counter display
 
   const handleUploadSuccess = (response: IKUploadResponse) => {
     setValue("videoUrl", response.filePath);
     setValue("thumbnailUrl", response.thumbnailUrl || response.filePath);
     showNotification("Video uploaded successfully!", "success");
-    setVideoSelected(true);
     
     // Move to the details step after upload
     setStep('details');
@@ -102,7 +100,6 @@ export default function VideoUploadForm() {
     setValue("videoUrl", "");
     setValue("thumbnailUrl", "");
     setVideoPreviewUrl(null);
-    setVideoSelected(false);
     setUploadProgress(0);
     setStep('upload');
   };
@@ -156,11 +153,17 @@ export default function VideoUploadForm() {
           <div className="md:w-1/2 bg-black flex items-center justify-center p-4 min-h-[300px]">
             {videoPreviewUrl ? (
               <div className="relative w-full h-full flex items-center justify-center">
-                <img 
-                  src={videoPreviewUrl} 
-                  alt="Video thumbnail" 
-                  className="max-h-[400px] w-auto object-contain" 
-                />
+                {/* Replace img with Next.js Image component */}
+                <div className="relative w-auto max-h-[400px]">
+                  <Image 
+                    src={videoPreviewUrl}
+                    alt="Video thumbnail"
+                    width={400}
+                    height={400}
+                    className="max-h-[400px] w-auto object-contain"
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
                 <button 
                   onClick={resetUpload}
                   className="absolute top-2 right-2 bg-base-100/30 hover:bg-base-100/50 p-1 rounded-full"

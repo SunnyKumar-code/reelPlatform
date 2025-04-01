@@ -31,7 +31,7 @@ export default function Login() {
         showNotification("Login successful!", "success");
         router.push("/");
       }
-    } catch (error) {
+    } catch (err) {
       showNotification("An error occurred during login", "error");
     } finally {
       setLoading(false);
@@ -100,7 +100,7 @@ export default function Login() {
             
             <div className="text-center">
               <p className="text-sm">
-                Don't have an account?{" "}
+                Don&apos;t have an account?{" "}
                 <Link 
                   href="/register" 
                   className="text-primary hover:underline"

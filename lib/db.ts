@@ -25,26 +25,24 @@ export async function connectToDatabase(){
         return cached.conn
     }
     if(!cached.promise){
-         
-        const opts ={
-            bufferCommands:true,
-            maxPoolSize:10,
+        const options = {
+            bufferCommands: true,
+            maxPoolSize: 10,
             serverSelectionTimeoutMS: 10000,
             connectTimeoutMS: 10000,
             socketTimeoutMS: 20000
         }
-        cached.promise=(mongoose
-            .connect(MONGODB_URL,opts))
+        cached.promise = mongoose
+            .connect(MONGODB_URL, options)
             .then((mongoose) => mongoose)
     }
 
     try{
-        cached.conn= await cached.promise
+        cached.conn = await cached.promise
     }catch(error){
-        cached.promise=null
+        cached.promise = null
         console.error("MongoDB connection error:", error);
         throw error
     }
     return cached.conn
-
 }
