@@ -41,7 +41,6 @@ export default function VideoUploadForm() {
   });
 
   const title = watch("title");
-  // We use title in the character counter display
 
   const handleUploadSuccess = (response: IKUploadResponse) => {
     setValue("videoUrl", response.filePath);
@@ -153,7 +152,6 @@ export default function VideoUploadForm() {
           <div className="md:w-1/2 bg-black flex items-center justify-center p-4 min-h-[300px]">
             {videoPreviewUrl ? (
               <div className="relative w-full h-full flex items-center justify-center">
-                {/* Replace img with Next.js Image component */}
                 <div className="relative w-auto max-h-[400px]">
                   <Image 
                     src={videoPreviewUrl}

@@ -31,7 +31,7 @@ export default function Login() {
         showNotification("Login successful!", "success");
         router.push("/");
       }
-    } catch (err) {
+    } catch {
       showNotification("An error occurred during login", "error");
     } finally {
       setLoading(false);
